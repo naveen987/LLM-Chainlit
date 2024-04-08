@@ -1,0 +1,181 @@
+body, html {
+    height: 100%;
+    margin: 0;
+    background: url('https://www.eduopinions.com/wp-content/uploads/2018/03/SRH-Heidelberg-University.jpg') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.chat {
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.card {
+    height: 500px;
+    border-radius: 15px !important;
+    background-color: #F2B07B; /* A complementary lighter shade for the card */
+}
+
+.contacts_body, .msg_card_body {
+    overflow-y: auto;
+}
+
+.card-header, .card-footer, .search, .type_msg, .attach_btn, .send_btn, .search_btn {
+    background-color: #F2B07B; /* Changed to the lighter complementary color */
+    color: #000000 !important; /* Changed text color to black for visibility */
+}
+
+.container {
+    align-content: center;
+}
+
+.search:focus, .type_msg:focus {
+    box-shadow: none !important;
+    outline: 0px !important;
+}
+
+.contacts {
+    list-style: none;
+    padding: 0;
+}
+
+.contacts li {
+    width: 100% !important;
+    padding: 5px 10px;
+    margin-bottom: 15px !important;
+}
+
+.active {
+    background-color: #E67E22; /* A darker orange for active element */
+}
+
+.user_img, .user_img_msg {
+    height: 70px;
+    width: 70px;
+    border: 1.5px solid #F2B07B; /* Border color adjusted to match card */
+}
+
+.img_cont, .img_cont_msg {
+    position: relative;
+}
+
+.online_icon {
+    position: absolute;
+    height: 15px;
+    width: 15px;
+    background-color: #4cd137; /* Green for online status */
+    border-radius: 50%;
+    bottom: 0.2em;
+    right: 0.4em;
+    border: 1.5px solid white;
+}
+
+.offline {
+    background-color: #c23616 !important;
+}
+
+.user_info {
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: 15px;
+}
+
+.user_info span, .user_info p {
+    font-size: 20px;
+    color: #F8F8FF; /* Black color for text for better readability */
+    font-weight: bold; /* Make text bold */
+}
+
+.video_cam {
+    margin-left: 50px;
+    margin-top: 5px;
+}
+
+.video_cam span {
+    color: #F2B07B; /* Color adjusted to match the lighter complementary color */
+    font-size: 20px;
+    cursor: pointer;
+    margin-right: 20px;
+}
+
+.msg_cotainer {
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: 10px;
+    border-radius: 25px;
+    background-color: #DF4807; /* Same as the background */
+    padding: 10px;
+    position: relative;
+}
+
+.msg_cotainer_send {
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-right: 10px;
+    border-radius: 25px;
+    background-color: #DF4807; /* Same as the background */
+    padding: 10px;
+    position: relative;
+}
+
+.msg_time, .msg_time_send {
+    position: absolute;
+    bottom: -15px;
+    color: rgba(0, 0, 0, 0.5); /* Dark color for timestamps */
+    font-size: 10px;
+}
+
+.msg_head {
+    position: relative;
+}
+
+#action_menu_btn {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    color: white;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+.action_menu {
+    z-index: 1;
+    position: absolute;
+    padding: 15px 0;
+    background-color: #E67E22; /* A darker orange for action menu */
+    color: white;
+    border-radius: 15px;
+    top: 30px;
+    right: 15px;
+    display: none;
+}
+
+.action_menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.action_menu ul li {
+    width: 100%;
+    padding: 10px 15px;
+    margin-bottom: 5px;
+}
+
+.action_menu ul li i {
+    padding-right: 10px;
+}
+.action_menu ul li:hover {
+    cursor: pointer;
+    background-color: #E67E22; /* A darker orange on hover */
+}
+
+@media(max-width: 576px) {
+    .contacts_card {
+        margin-bottom: 15px !important;
+    }
+}
+
