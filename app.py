@@ -5,6 +5,8 @@ from pinecone import Pinecone as PineconeClient, ServerlessSpec
 from langchain.prompts import PromptTemplate
 from langchain_community.llms import CTransformers
 from langchain.chains import RetrievalQA
+from langchain.document_loaders import PyPDFLoader
+from langchain.text_splitter import CharacterTextSplitter
 from dotenv import load_dotenv
 import os
 import warnings
@@ -95,29 +97,29 @@ async_long_running_task = cl.make_async(long_running_task)
 @cl.on_chat_start
 async def start_chat():
     """Send a welcome message when the chat starts."""
-    await cl.Message(content="Welcome! Please select a chat profile to begin.").send()
-
-@cl.on_chat_resume
-async def on_chat_resume():
-    """Handle chat session resumption."""
-    try:
-        # Retrieve the last selected chat profile from the user session
-        chat_profile = cl.user_session.get("chat_profile")
-
-        if chat_profile:
-            # Inform the user about the resumed chat profile
-            await cl.Message(content=f"Welcome back! Resuming your session with the '{chat_profile}' profile.").send()
-        else:
-            # Prompt the user to select a profile if not set
-            await cl.Message(content="Welcome back! Please select a chat profile to continue.").send()
-    except Exception as e:
-        print(f"Error in on_chat_resume: {e}")
-        await cl.Message(content="An error occurred while resuming your session. Please try again.").send()
+    await cl.Message(content="Welcome! Please select a chat profile to begin or upload a PDF to extract text and ask questions.").send()
 
 @cl.on_message
 async def handle_message(message):
-    """Handle user messages and process the query."""
+    """Handle user messages and file uploads."""
     try:
+        if message.type == "file":
+            print("Processing uploaded file...")
+            loader = PyPDFLoader(message.file_path)
+            documents = loader.load()
+
+            # Split text into manageable chunks
+            text_splitter = CharacterTextSplitter(chunk_size=1000, chunk_overlap=100)
+            texts = text_splitter.split_documents(documents)
+
+            # Add chunks to Pinecone index
+            for text in texts:
+                docsearch.add_texts([text.page_content])
+
+            await cl.Message(content="PDF uploaded and processed successfully! You can now ask questions about its content.").send()
+            return
+
+        # Handle regular text messages
         print("Message received from UI:", message.content)
         query = message.content
 
@@ -145,11 +147,6 @@ async def handle_message(message):
 
         # Prepare input data for the LLM
         input_data = {"query": query, "context": truncated_context}
-
-        # Send periodic progress updates
-        for i in range(3):  # Send 3 periodic updates
-            await asyncio.sleep(5)  # Simulate processing delay
-            await cl.Message(content=f"Processing... {i * 33}% done").send()
 
         # Call the asynchronous long-running task
         result = await async_long_running_task(input_data, llm)
