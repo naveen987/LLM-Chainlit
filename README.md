@@ -1,101 +1,102 @@
 # SRH-CHATBOT-V3
 
-SRH-CHATBOT-V3 is a sophisticated chatbot system tailored for university environments, designed to deliver efficient and precise responses by utilizing cutting-edge technologies such as Meta Llama2 and Pinecone. Engineered for simplicity and scalability, it is ideally suited for diverse university-related applications, from streamlining administrative tasks and improving operational efficiency to facilitating interactive learning environments for students and faculty. This chatbot aims to transform communication within the university, ensuring that information and academic support are more accessible and effective for the entire university community.
+SRH-CHATBOT-V3 is an advanced chatbot system designed to streamline communication within university environments. It leverages cutting-edge technologies like Meta Llama2 and Pinecone to provide efficient and precise responses. This chatbot aims to enhance administrative efficiency, improve operational workflows, and foster interactive learning for students and faculty. By making information more accessible, SRH-CHATBOT-V3 transforms the academic support landscape within universities.
+
+## Features
+- **AI-Powered Conversations**: Utilizes Meta Llama2 for natural language understanding and response generation.
+- **Vector Search**: Powered by Pinecone for fast and accurate document retrieval.
+- **Interactive Learning**: Facilitates student-faculty interaction through a responsive chat interface.
+- **Customizable UI**: Supports HTML and CSS-based UI customization.
+- **Scalable Infrastructure**: Built for deployment across diverse university-related applications.
 
 ## Getting Started
-Follow these steps to get your copy of SRH-CHATBOT-V3 up and running on your local machine for development and testing purposes.
 
 ### Prerequisites
-- **Anaconda**: Download and install Anaconda from the [official Anaconda website](https://www.anaconda.com/products/individual).
-- **Pinecone Account**: Sign up at [Pinecone.io](https://www.pinecone.io/).
+To set up and run SRH-CHATBOT-V3, ensure you have the following:
+
+- **Anaconda**: [Download and install](https://www.anaconda.com/products/individual).
+- **Pinecone Account**: [Sign up here](https://www.pinecone.io/).
 - **Google Cloud Storage Bucket**: Create a bucket in your Google Cloud account.
-- **Bing Search API Key**: Obtain your API key by following the steps at [Create a Bing Search Service Resource](https://docs.microsoft.com/en-us/azure/cognitive-services/bing-web-search/).
+- **Bing Search API Key**: Follow [these steps](https://docs.microsoft.com/en-us/azure/cognitive-services/bing-web-search/) to obtain your API key.
 
 ### Setup Instructions
 
-#### Step 1: Clone the Repository
-Clone the SRH-CHATBOT-V3 repository to your local machine using the command:
+#### 1. Clone the Repository
+Clone the SRH-CHATBOT-V3 repository to your local machine:
 ```bash
-git clone https://github.com/hassanspaceimam/SRH-CHATBOT-V3.git
+git clone https://github.com/naveen987/LLM-Chainlit.git
 ```
 
-#### Step 2: Create a Conda Environment
-Navigate to the project directory and create a new Conda environment named `schatbot` with Python 3.8:
+#### 2. Create a Conda Environment
+Navigate to the project directory and create a new Conda environment:
 ```bash
 conda create -n schatbot python=3.8 -y
-```
-Activate the environment:
-```bash
 conda activate schatbot
 ```
 
-#### Step 3: Install Dependencies
-Install the required Python packages listed in `requirements.txt`:
+#### 3. Install Dependencies
+Install the required Python packages:
 ```bash
 pip install -r requirements.txt
 ```
 
-#### Step 4: Set Up Environment Variables
-Create a `.env` file in the root directory and add your Pinecone credentials and Bing Search API key:
+#### 4. Configure Environment Variables
+Create a `.env` file in the root directory with the following details:
 ```ini
-PINECONE_API_KEY = "your_pinecone_api_key_here"
-PINECONE_API_ENV = "your_pinecone_environment_here"
-BING_SEARCH_API_KEY = "your_bing_search_api_key_here"
+PINECONE_API_KEY=your_pinecone_api_key_here
+PINECONE_API_ENV=your_pinecone_environment_here
+BING_SEARCH_API_KEY=your_bing_search_api_key_here
 ```
 
-#### Step 5: Download and Set Up the Model
-Download the Llama 2 Model llama-2-13b-chat.ggmlv3.q4_0.bin from [Hugging Face](https://huggingface.co/TheBloke/Llama-2-13B-chat-GGML) and place it in the model directory.
+#### 5. Download the Model
+Download the Llama 2 Model (llama-2-13b-chat.ggmlv3.q4_0.bin) from [Hugging Face](https://huggingface.co/TheBloke/Llama-2-13B-chat-GGML) and place it in the `model` directory.
 
-
-#### Step 6: Prepare Data Index
-Before proceeding with the data index preparation, ensure that you have created a Pinecone index named `srh-heidelberg-docs` with the following specifications:
+#### 6. Prepare the Data Index
+Set up a Pinecone index named `srh-heidelberg-docs` with the following:
 - **Metric**: Cosine
 - **Dimensions**: 768
 
-This Pinecone index is essential for storing and retrieving vectorized representations of your documents. Once the index is set up, choose one of the following methods to prepare and upload your data:
-
-- **Using Local PDF Documents**:
-  If you have PDF documents available locally in your `data` folder, you can upload their vectors to the Pinecone index. Use the `store_index.py` script to convert your local PDF files into vectors and upload them:
+Prepare and upload document vectors:
+- For local PDF files:
   ```bash
   python store_index.py
   ```
-- **Using PDF Documents Available in a Google Cloud Bucket**:
-  If you prefer to load your PDF documents from a Google Cloud Storage bucket, update the BUCKET_NAME in the gcs_store_index.py script with your actual bucket name. Specify the absolute path to your data folder in the DATA_FOLDER variable within the script. This method will download the PDF documents from your Google Cloud Storage bucket, convert them to vectors, and upload them to the Pinecone index:
+- For Google Cloud Storage PDFs:
+  Update `BUCKET_NAME` in `gcs_store_index.py` and run:
   ```bash
   python gcs_store_index.py
   ```
 
+## Running the Application
 
-### Launch the Application
-
-#### Using Streamlit
-Run the application using Streamlit:
+### Streamlit Interface
+Run the chatbot using Streamlit:
 ```bash
 streamlit run appstreamlit.py
 ```
-Access the web interface at `http://localhost:8501/`.
+Access it at: `http://localhost:8501/`
 
-#### Using Flask with Customizable UI
-For a more personalized user interface, Flask allows you to customize the UI using HTML and CSS. The template and stylesheet for customization can be found at the following locations within the SRH-CHATBOT-V3 project:
+### Flask Interface
+For a customizable UI, use Flask:
+- Edit `templates/chat.html` for the layout.
+- Modify `static/style.css` for design changes.
 
-- **HTML Template**: `SRH-CHATBOT-V3/templates/chat.html` - This file serves as the layout for the chat interface. You can edit this file to modify the structure, elements, and overall design of the web page.
-- **CSS Stylesheet**: `SRH-CHATBOT-V3/static/style.css` - This stylesheet contains the style rules for the web interface. Customize this file to change the look and feel of the chatbot UI, including colors, fonts, spacing, and more.
-
-After making your desired customizations to the HTML template and CSS stylesheet, launch the application with Flask by running:
+Run the Flask app:
 ```bash
 python app.py
 ```
-Access the web interface at `http://localhost:8080/`.
+Access it at: `http://localhost:8080/`
 
-### Tech Stack:
-- Python: Core programming language
-- LangChain: Library for building language model applications
-- Flask: Web framework for building the backend
-- Meta Llama2: AI model for natural language understanding and generation
-- Pinecone: Vector database for similarity search
-- Streamlit: Framework for building interactive web apps
-- Google Cloud Storage: Cloud storage for PDF files
-- Bing Search API: Web search capabilities
+## Tech Stack
+- **Python**: Core programming language.
+- **LangChain**: For building language model applications.
+- **Flask**: Backend web framework.
+- **Meta Llama2**: AI model for NLP.
+- **Pinecone**: Vector database for similarity search.
+- **Streamlit**: Framework for building interactive apps.
+- **Google Cloud Storage**: For storing PDFs.
+- **Bing Search API**: For web search capabilities.
 
-### Acknowledgments
-Special thanks to SRH Heidelberg for supporting this project.
+## Acknowledgments
+Special thanks to SRH Heidelberg for supporting the development of this project.
+
